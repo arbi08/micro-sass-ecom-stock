@@ -13,7 +13,7 @@ class Subscription extends Model
     protected $fillable = [
         'tenant_id',
         'plan_id',
-        'status',
+        'status', // (active / canceled / expired)
         'starts_at',
         'ends_at',
         'is_trial',

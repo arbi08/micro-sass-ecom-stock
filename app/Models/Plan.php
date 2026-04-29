@@ -10,11 +10,11 @@ class Plan extends Model
     use HasFactory;
 
     protected $fillable = [
-        'name',
+        'name', // (Free / Basic / Pro)
         'slug',
         'price',
-        'currency',
-        'billing_interval',
+        'currency', // USD, MAD, EUR
+        'billing_interval', // monthly, yearly
         'features',
         'is_active'
     ];

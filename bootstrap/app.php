@@ -21,6 +21,7 @@ return Application::configure(basePath: dirname(__DIR__))
         $middleware->alias([
             'tenant' => \App\Http\Middleware\TenantMiddleware::class,
             'plan.limits' => \App\Http\Middleware\CheckPlanLimits::class,
+            'onboarding' => \App\Http\Middleware\OnboardingMiddleware::class,
         ]);
     })
     ->withExceptions(function (Exceptions $exceptions): void {

@@ -22,6 +22,8 @@ return new class extends Migration
             $table->string('phone_fixe')->nullable();
             $table->timestamp('email_verified_at')->nullable();
             $table->string('password');
+            $table->integer('onboarding_step')->default(1);
+            $table->string('type')->default('temporaire');
             $table->rememberToken();
             $table->timestamps();
         });
