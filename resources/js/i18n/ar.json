@@ -3,5 +3,25 @@
         "hello": "مرحبا",
         "welcome": "مرحبا"
     },
-    "auth": "المصادقة"
+    "auth": "المصادقة",
+    "catalog_management": "إدارة الكتالوج",
+    "products": "المنتجات",
+    "types": "الأنواع",
+    "catalogs": "الكتالوجات",
+    "sub_catalogs": "الكتالوجات الفرعية",
+
+    "suppliers": "الموردون",
+
+    "sales": "المبيعات والطلبات",
+    "orders": "الطلبات",
+    "invoices": "الفواتير",
+    "payments": "المدفوعات",
+    "conversations": "المحادثات",
+
+    "purchasing": "المشتريات",
+    "purchases": "المشتريات",
+    "shipments": "الشحنات",
+
+    "inventory": "المخزون",
+    "stocks": "المخزون"
 }

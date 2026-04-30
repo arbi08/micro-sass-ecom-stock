@@ -3,5 +3,25 @@
         "hello": "Bonjour",
         "welcome": "Bienvenue"
     },
-    "auth": "Authentification"
+    "auth": "Authentification",
+    "catalog_management": "Gestion du catalogue",
+    "products": "Produits",
+    "types": "Types",
+    "catalogs": "Catalogues",
+    "sub_catalogs": "Sous-catalogues",
+
+    "suppliers": "Fournisseurs",
+
+    "sales": "Ventes & Commandes",
+    "orders": "Commandes",
+    "invoices": "Factures",
+    "payments": "Paiements",
+    "conversations": "Conversations",
+
+    "purchasing": "Achats",
+    "purchases": "Achats",
+    "shipments": "Expéditions",
+
+    "inventory": "Stock",
+    "stocks": "Stocks"
 }

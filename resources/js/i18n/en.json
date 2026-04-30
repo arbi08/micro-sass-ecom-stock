@@ -3,5 +3,25 @@
         "hello": "Hello",
         "welcome": "Welcome"
     },
-    "auth": "Authentication"
+    "auth": "Authentication",
+    "catalog_management": "Catalog Management",
+    "products": "Products",
+    "types": "Types",
+    "catalogs": "Catalogs",
+    "sub_catalogs": "Sub Catalogs",
+
+    "suppliers": "Suppliers",
+
+    "sales": "Sales & Orders",
+    "orders": "Orders",
+    "invoices": "Invoices",
+    "payments": "Payments",
+    "conversations": "Conversations",
+
+    "purchasing": "Purchasing",
+    "purchases": "Purchases",
+    "shipments": "Shipments",
+
+    "inventory": "Inventory",
+    "stocks": "Stocks"
 }
