@@ -43,5 +43,10 @@ Route::get('/test', [TestController::class, 'index'])->name('test');
 Route::get('/403', function () {
     return Inertia::render('Error403');
 })->name('403');
+Route::prefix('vendor')->group(function () {
+    Route::get('/dashboard', function () {
+        return Inertia::render('Vendor/Dashboard');
+    });
+});
 
 require __DIR__.'/auth.php';
