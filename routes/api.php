@@ -1,5 +1,11 @@
 <?php
 
+use App\Http\Controllers\Chats\MessageController;
+use App\Http\Controllers\Types\TypeController;
+use App\Http\Controllers\Types\CategoryController;
 use Illuminate\Support\Facades\Route;
 
-Route::post('/messages', [\App\Http\Controllers\MessageController::class, 'send']);
+Route::post('/messages', [MessageController::class, 'send']);
+
+Route::apiResource('/types', TypeController::class);
+Route::apiResource('/categories', CategoryController::class);

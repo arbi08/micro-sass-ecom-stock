@@ -1,9 +1,9 @@
 <?php
 
-use App\Http\Controllers\OnboardingController;
-use App\Http\Controllers\ProductController;
+use App\Http\Controllers\Dev\TestController as DevTestController;
+use App\Http\Controllers\Products\ProductController;
 use App\Http\Controllers\ProfileController;
-use App\Http\Controllers\TestController;
+use App\Http\Controllers\Tenant\OnboardingController;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
@@ -38,7 +38,7 @@ Route::middleware(['auth', 'plan.limits'])->group(function () {
 Route::middleware(['auth', 'tenant'])->group(function () {
     Route::get('/products', [ProductController::class, 'index']);
 });
-Route::get('/test', [TestController::class, 'index'])->name('test');
+Route::get('/test', [DevTestController::class, 'index'])->name('test');
 
 Route::get('/403', function () {
     return Inertia::render('Error403');
