@@ -4,6 +4,8 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Support\Str;
+
 
 class Tenant extends Model
 {
@@ -24,7 +26,7 @@ class Tenant extends Model
 
     public function owner()
     {
-        return $this->belongsTo(User::class, 'owner_id');
+        return $this->belongsTo(User::class, 'owner_id')->withDefault();
     }
 
     public function products()
@@ -56,4 +58,28 @@ class Tenant extends Model
     {
         return $this->hasMany(Payment::class);
     }
+
+    public function categories()
+    {
+        return $this->hasMany(TenantCategory::class);
+    }
+
+    public function scopeCurrent($query)
+    {
+        return $query->where('tenant_id', app('tenant_id'));
+    }
+
+    public function isOwner($userId)
+    {
+        return $this->owner_id === $userId;
+    }
+
+    protected static function booted()
+    {
+        static::creating(function ($tenant) {
+            $tenant->slug = Str::slug($tenant->name) . '-' . uniqid();
+        });
+    }
 }
+
+

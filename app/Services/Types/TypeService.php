@@ -7,6 +7,9 @@ use App\Actions\Type\GetAllTypesAction;
 use App\Actions\Type\FindTypeByIdAction;
 use App\Actions\Type\UpdateTypeAction;
 use App\Actions\Type\DeleteTypeAction;
+use App\Actions\Type\GetAllTypesActionWithArticles;
+use App\Actions\Type\AttachTypeToTenant;
+use App\Models\Category;
 
 class TypeService
 {
@@ -15,31 +18,53 @@ class TypeService
         private GetAllTypesAction $getAllTypesAction,
         private FindTypeByIdAction $findTypeByIdAction,
         private UpdateTypeAction $updateTypeAction,
-        private DeleteTypeAction $deleteTypeAction
+        private DeleteTypeAction $deleteTypeAction,
+        private GetAllTypesActionWithArticles $getAllTypesActionWithArticles,
+        private AttachTypeToTenant $attachTypeToTenantAction
     ) {}
 
-    public function getAll($tenantId)
+    public function getAll($tenantId = null)
     {
-        return $this->getAllTypesAction->execute($tenantId);
+        return $tenantId 
+            ? $this->getAllTypesAction->execute($tenantId)
+            : $this->getAllTypesAction->execute();
     }
 
-    public function findById($id, $tenantId)
+    public function findById($id, $tenantId = null)
     {
-        return $this->findTypeByIdAction->execute($id, $tenantId);
+        return $tenantId 
+            ? $this->findTypeByIdAction->execute($id, $tenantId)
+            : $this->findTypeByIdAction->execute($id);
     }
 
-    public function create(array $data)
+    public function create(array $data, $tenantId = null)
     {
-        return $this->createTypeAction->execute($data);
+        return $tenantId 
+            ? $this->createTypeAction->execute($data, $tenantId)
+            : $this->createTypeAction->execute($data);
     }
 
-    public function update($id, $tenantId, array $data)
+    public function update($id, $tenantId = null, array $data)
     {
-        return $this->updateTypeAction->execute($id, $tenantId, $data);
+        return $tenantId 
+            ? $this->updateTypeAction->execute($id, $tenantId, $data)
+            : $this->updateTypeAction->execute($id, null, $data);
     }
 
-    public function delete($id, $tenantId)
+    public function delete($id, $tenantId = null)
     {
-        return $this->deleteTypeAction->execute($id, $tenantId);
+        return $tenantId 
+            ? $this->deleteTypeAction->execute($id, $tenantId)
+            : $this->deleteTypeAction->execute($id);
+    }
+    
+    public function getFeaturedTypesWithArticles($tenantId = null)
+    {
+        return $this->getAllTypesActionWithArticles->execute($tenantId);
+    }
+
+    public function attachTypeToTenant(Category $type)
+    {
+        return $this->attachTypeToTenantAction->execute($type);
     }
 }

@@ -16,6 +16,7 @@ return new class extends Migration {
             // SaaS isolation
             $table
                 ->foreignId('tenant_id')
+                ->nullable()
                 ->constrained()
                 ->cascadeOnDelete();
 

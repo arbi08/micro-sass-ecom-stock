@@ -19,27 +19,35 @@ return new class extends Migration {
                 ->constrained()
                 ->cascadeOnDelete();
 
+            // 🔗 link to article
             $table
-                ->foreignId('category_id')
+                ->foreignId('article_id')
+                ->nullable()
                 ->constrained()
-                ->cascadeOnDelete();
+                ->nullOnDelete();
 
+            $table
+                ->foreignId('tenant_category_id')
+                ->nullable()
+                ->constrained('tenant_categories')
+                ->nullOnDelete();
+
+            // 🧠 snapshot (important)
             $table->string('name');
-            $table->string('sku')->unique()->nullable();
-            $table->string('type')->default('main');
-            // sub, main
             $table->text('description')->nullable();
-
-            $table->decimal('price', 10, 2)->default(0);
-            $table->decimal('cost_price', 10, 2)->nullable();
-            $table->string('barcode')->nullable();
             $table->string('image')->nullable();
 
-            $table->string('status')->default('active');
-            // active, inactive
+            // 💰 main product price (optional fallback)
+            $table->decimal('price', 10, 2)->default(0);
 
-            $table->json('attributes')->nullable();
-            // flexible fields (size, color, etc.)
+            // 📦 simple stock (optional aggregate)
+            $table->integer('stock')->default(0);
+
+            // 🧩 override system
+            $table->json('overrides')->nullable();
+
+            // 🧠 status
+            $table->string('status')->default('active');
 
             $table->timestamps();
         });

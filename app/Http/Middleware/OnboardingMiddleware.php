@@ -15,13 +15,13 @@ class OnboardingMiddleware
      */
     public function handle(Request $request, Closure $next): Response
     {
-        if (auth()->check()) {
-            $user = auth()->user();
+        // if (auth()->check()) {
+        //     $user = auth()->user();
 
-            if ($user->onboarding_step < 3 && $request->path() !== 'onboarding') {
-                return redirect('/onboarding');
-            }
-        }
+        //     if ($user->onboarding_step < 3 && $request->path() !== 'onboarding') {
+        //         return redirect('/onboarding');
+        //     }
+        // }
 
         return $next($request);
     }

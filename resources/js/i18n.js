@@ -6,7 +6,7 @@ import ar from './i18n/ar.json'
 
 export const i18n = createI18n({
   legacy: false,
-  locale: 'ar',
+  locale: 'en',
   fallbackLocale: 'en',
   messages: {
     en: en,

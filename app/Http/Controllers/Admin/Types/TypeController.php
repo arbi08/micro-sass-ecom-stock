@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers\Types;
+namespace App\Http\Controllers\Admin\Types;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Types\CreateTypeRequest;

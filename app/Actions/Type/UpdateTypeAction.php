@@ -10,9 +10,14 @@ class UpdateTypeAction
         private TypeRepository $typeRepository
     ) {}
 
-    public function execute($id, $tenantId, array $data)
+    public function execute($id, $tenantId = null, array $data)
     {
-        $type = $this->typeRepository->findById($id, $tenantId);
-        return $this->typeRepository->update($type, $data);
+        $type = $tenantId 
+            ? $this->typeRepository->findTenantType($id, $tenantId)
+            : $this->typeRepository->findType($id);
+        
+        return $tenantId 
+            ? $this->typeRepository->updateTenantType($type, $data)
+            : $this->typeRepository->updateType($type, $data);
     }
 }

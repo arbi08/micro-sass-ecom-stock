@@ -10,9 +10,14 @@ class DeleteTypeAction
         private TypeRepository $typeRepository
     ) {}
 
-    public function execute($id, $tenantId)
+    public function execute($id, $tenantId = null)
     {
-        $type = $this->typeRepository->findById($id, $tenantId);
-        return $this->typeRepository->delete($type);
+        $type = $tenantId 
+            ? $this->typeRepository->findTenantType($id, $tenantId)
+            : $this->typeRepository->findType($id);
+        
+        return $tenantId 
+            ? $this->typeRepository->deleteTenantType($type)
+            : $this->typeRepository->deleteType($type);
     }
 }

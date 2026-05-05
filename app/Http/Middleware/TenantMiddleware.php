@@ -24,15 +24,22 @@ class TenantMiddleware
         //     abort(403, 'Unauthorized');
         // }
 
-        $tenant = auth()->user()->tenant;
+        // $tenant = auth()->user()->tenant;
 
-        if (!$tenant) {
-            // abort(403, 'Tenant not found');
-            return redirect()->route('403');
+        // if (!$tenant) {
+        //     // abort(403, 'Tenant not found');
+        //     return redirect()->route('403');
+        // }
+
+        // // bind tenant globally
+        // app()->instance('tenant', $tenant);
+
+        // return $next($request);
+        if (!auth()->check()) {
+            return $next($request);
         }
 
-        // bind tenant globally
-        app()->instance('tenant', $tenant);
+        app()->instance('tenant_id', auth()->user()->tenant_id);
 
         return $next($request);
     }

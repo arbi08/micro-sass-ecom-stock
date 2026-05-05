@@ -10,8 +10,8 @@ class GetAllTypesAction
         private TypeRepository $typeRepository
     ) {}
 
-    public function execute($tenantId)
+    public function execute($tenantId = null)
     {
-        return $this->typeRepository->getAllByTenant($tenantId);
+        return $tenantId ? $this->typeRepository->getAllByTenant($tenantId) : $this->typeRepository->getAll();
     }
 }

@@ -10,8 +10,10 @@ class FindTypeByIdAction
         private TypeRepository $typeRepository
     ) {}
 
-    public function execute($id, $tenantId)
+    public function execute($id, $tenantId = null)
     {
-        return $this->typeRepository->findById($id, $tenantId);
+        return $tenantId 
+            ? $this->typeRepository->findTenantType($id, $tenantId)
+            : $this->typeRepository->findType($id);
     }
 }

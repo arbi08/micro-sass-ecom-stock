@@ -1,14 +1,38 @@
 <template>
-  <aside class="w-64 bg-gradient-to-b from-blue-950 to-blue-900 text-white min-h-screen flex flex-col border-r border-blue-800">
+  <!-- Overlay (mobile فقط) -->
+  <div
+    v-if="isOpen"
+    class="fixed inset-0 bg-black/50 z-40 2xl:hidden"
+    @click="$emit('close')"
+  ></div>
 
+  <!-- Sidebar -->
+  <aside
+    class="fixed 2xl:static top-0 left-0 z-50 h-full w-64 
+           bg-gradient-to-b from-blue-950 to-blue-900 text-white 
+           flex flex-col border-r border-blue-800
+           transform transition-transform duration-300"
+    :class="isOpen ? 'translate-x-0' : '-translate-x-full 2xl:translate-x-0'"
+  >
     <!-- HEADER -->
     <div class="p-5 border-b border-blue-800">
-      <h2 class="text-lg font-bold tracking-wide">Vendor Panel</h2>
-      <p class="text-xs text-blue-300">Management System</p>
+      <div class="flex items-start justify-between gap-3">
+        <div class="min-w-0">
+          <h2 class="truncate text-lg font-bold tracking-wide">Vendor Panel</h2>
+          <p class="text-xs text-blue-300">Management System</p>
+        </div>
+        <button
+          type="button"
+          class="rounded-lg px-2 py-1 text-sm text-blue-100 transition hover:bg-blue-800 2xl:hidden"
+          @click="$emit('close')"
+        >
+          x
+        </button>
+      </div>
     </div>
 
     <!-- SCROLL AREA -->
-    <div class="flex-1 overflow-y-auto p-3 space-y-6">
+    <div class="flex-1 overflow-y-auto p-3 space-y-6" style="scrollbar-width: none;">
 
       <!-- DASHBOARD (TOP ITEM) -->
       <Link
@@ -60,7 +84,10 @@
 <script setup lang="ts">
 import { useI18n } from 'vue-i18n'
 import { Link, usePage } from '@inertiajs/vue3'
-
+defineProps({
+  isOpen: Boolean
+})
+defineEmits(['close'])
 const { locale } = useI18n()
 const page = usePage()
 
@@ -83,10 +110,10 @@ const menu: MenuSection[] = [
   {
     title: 'catalog_management',
     items: [
-      { name: 'products', route: '#' },
-      { name: 'types', route: '#' },
-      { name: 'catalogs', route: '#' },
-      { name: 'sub_catalogs', route: '#' }
+      { name: 'products', route: '/vendor/products' },
+      { name: 'types', route: '/vendor/types' },
+      { name: 'catalogs', route: '/vendor/catalogs' },
+      { name: 'sub_catalogs', route: '/vendor/sub-catalogs' }
     ]
   },
   {

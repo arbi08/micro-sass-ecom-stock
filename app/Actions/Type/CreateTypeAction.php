@@ -10,8 +10,10 @@ class CreateTypeAction
         private TypeRepository $typeRepository
     ) {}
 
-    public function execute(array $data)
+    public function execute(array $data, $tenantId = null)
     {
-        return $this->typeRepository->create($data);
+        return $tenantId 
+            ? $this->typeRepository->createTenantType(array_merge($data, ['tenant_id' => $tenantId]))
+            : $this->typeRepository->createType($data);
     }
 }

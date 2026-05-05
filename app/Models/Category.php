@@ -11,8 +11,10 @@ use Illuminate\Support\Str;
 class Category extends Model
 {
     use HasTenant, HasFactory, SoftDeletes;
+
     protected $appends = ['level'];
     protected $hidden = ['parent'];
+
     protected $fillable = [
         'tenant_id',
         'name',
@@ -142,5 +144,13 @@ class Category extends Model
         }
 
         return $slug;
+    }
+
+    public function tenants()
+    {
+        return $this->belongsToMany(
+            Tenant::class,
+            'tenant_categories'
+        );
     }
 }

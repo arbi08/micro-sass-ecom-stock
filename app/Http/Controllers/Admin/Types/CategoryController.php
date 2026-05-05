@@ -1,18 +1,18 @@
 <?php
 
-namespace App\Http\Controllers\Types;
+namespace App\Http\Controllers\Admin\Types;
 
 use App\Http\Controllers\Controller;
-use App\Http\Requests\Types\CreateSubCategoryRequest;
-use App\Http\Requests\Types\UpdateSubCategoryRequest;
-use App\Services\Types\SubCategoryService;
+use App\Http\Requests\Types\CreateCategoryRequest;
+use App\Http\Requests\Types\UpdateCategoryRequest;
+use App\Services\Types\CategoryService;
 
-class SubCategoryController extends Controller
+class CategoryController extends Controller
 {
     
-    public function __construct(private SubCategoryService $subCategoryService)
+    public function __construct(private CategoryService $categoryService)
     {
-        $this->subCategoryService = $subCategoryService;
+        $this->categoryService = $categoryService;
     }
 
     /**
@@ -21,7 +21,7 @@ class SubCategoryController extends Controller
     public function index()
     {
         $tenant_id = 1;
-        $types = $this->subCategoryService->getAll($tenant_id);
+        $types = $this->categoryService->getAll($tenant_id);
         return response()->json($types);
     }
 
@@ -36,10 +36,10 @@ class SubCategoryController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(CreateSubCategoryRequest $request)
+    public function store(CreateCategoryRequest $request)
     {
-        $this->subCategoryService->create($request->validated());
-        return redirect()->route('subcategories.index');
+        $this->categoryService->create($request->validated());
+        return redirect()->route('categories.index');
     }
 
     /**
@@ -48,7 +48,7 @@ class SubCategoryController extends Controller
     public function show(string $id)
     {
         try {
-            $type = $this->subCategoryService->findById($id, 1);
+            $type = $this->categoryService->findById($id, 1);
             return response()->json([
                 'data' => $type
             ]);
@@ -66,17 +66,17 @@ class SubCategoryController extends Controller
      */
     public function edit(string $id)
     {
-        $type = $this->subCategoryService->findById($id, 1);
+        $type = $this->categoryService->findById($id, 1);
         return view('types.edit', compact('type'));
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(UpdateSubCategoryRequest $request, string $id)
+    public function update(UpdateCategoryRequest $request, string $id)
     {
-        $this->subCategoryService->update($id, 1, $request->validated());
-        return redirect()->route('subcategories.index');
+        $this->categoryService->update($id, 1, $request->validated());
+        return redirect()->route('categories.index');
     }
 
     /**
@@ -84,7 +84,7 @@ class SubCategoryController extends Controller
      */
     public function destroy(string $id)
     {
-        $this->subCategoryService->delete($id, 1);
-        return redirect()->route('subcategories.index');
+        $this->categoryService->delete($id, 1);
+        return redirect()->route('categories.index');
     }
 }

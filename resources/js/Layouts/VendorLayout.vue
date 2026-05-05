@@ -1,25 +1,26 @@
 <template>
-  <div class="flex h-screen">
-    <Sidebar />
+  <div class="flex h-screen overflow-hidden">
+    <!-- Sidebar -->
+    <Sidebar :isOpen="isOpen" @close="isOpen = false" />
 
-    <div class="flex-1 flex flex-col">
-      <Navbar />
+    <div class="min-w-0 flex-1 flex flex-col">
+      <Navbar @toggleSidebar="isOpen = !isOpen" />
 
-      <main class="p-6 bg-gray-100 flex-1 overflow-y-auto">
-        <router-view />
+      <main class="flex-1 overflow-y-auto bg-gray-100 p-3 sm:p-4 lg:p-6">
+        <slot />
       </main>
     </div>
   </div>
 </template>
 
 <script setup lang="ts">
-    import Sidebar from '../components/vendor/Sidebar.vue'
-    import Navbar from '../components/vendor/Navbar.vue'
-    import { watch } from 'vue'
-    import { useI18n } from 'vue-i18n'
-
-    const { locale } = useI18n()
-    watch(locale, (lang) => {
-        document.dir = lang === 'ar' ? 'rtl' : 'ltr'
-    })
+  import Navbar from "@/Components/Vendor/Navbar.vue";
+import Sidebar from "@/Components/Vendor/Sidebar.vue";
+import { watch, ref } from "vue";
+  import { useI18n } from "vue-i18n";
+  const isOpen = ref(false);
+  const { locale } = useI18n();
+  watch(locale, (lang) => {
+    document.dir = lang === "ar" ? "rtl" : "ltr";
+  });
 </script>

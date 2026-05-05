@@ -11,75 +11,98 @@ class Product extends Model
     use HasTenant, HasFactory;
 
     protected $fillable = [
+        'tenant_id',
+        'article_id',
+        'tenant_category_id',
         'name',
-        'sku',
         'description',
+        'image',
         'price',
         'stock',
-        'cost_price',
-        'barcode',
-        'image',
+        'overrides',
         'status',
-        'attributes',
     ];
 
     protected $casts = [
-        'attributes' => 'array',
+        'overrides' => 'array',
+        'price' => 'decimal:2',
+        'stock' => 'integer',
     ];
 
-    public function categories()
-    {
-        return $this->belongsToMany(Category::class, 'product_categories');
-    }
+    /*
+    |--------------------------------
+    | RELATIONS
+    |--------------------------------
+    */
 
-    public function suppliers()
-    {
-        return $this
-            ->belongsToMany(Supplier::class)
-            ->withPivot('purchase_price');
-    }
-
-    public function stocks()
-    {
-        return $this->hasMany(Stock::class);
-    }
-
-    public function mainCategory()
-    {
-        return $this
-            ->belongsTo(Category::class, 'product_categories', 'product_id', 'category_id')
-            ->where('product_categories.type', 'main');
-    }
-
-    public function subCategories()
-    {
-        return $this
-            ->belongsToMany(Category::class, 'product_categories', 'product_id', 'category_id')
-            ->where('product_categories.type', 'sub');
-    }
-
+    // 🏢 SaaS tenant
     public function tenant()
     {
         return $this->belongsTo(Tenant::class);
     }
+
+    // 📦 Source article (catalog)
+    public function article()
+    {
+        return $this->belongsTo(Article::class);
+    }
+
+    // 🗂️ Category inside tenant scope
+    public function tenantCategory()
+    {
+        return $this->belongsTo(TenantCategorie::class);
+    }
+
+    // 🧩 Variants (REAL selling units)
+    public function variants()
+    {
+        return $this->hasMany(ProductVariant::class);
+    }
+
+    /*
+    |--------------------------------
+    | HELPERS (IMPORTANT)
+    |--------------------------------
+    */
+
+    // 🧠 get effective price (fallback logic)
+    public function getEffectivePriceAttribute()
+    {
+        return $this->price ?? 0;
+    }
+
+    // 🧠 get main image fallback
+    public function getMainImageAttribute()
+    {
+        return $this->image ?? $this->article?->image;
+    }
+
+    // 🧠 total stock from variants
+    public function getTotalStockAttribute()
+    {
+        return $this->variants()->sum('stock');
+    }
+
+    /*
+    |--------------------------------
+    | SCOPES
+    |--------------------------------
+    */
 
     public function scopeActive($query)
     {
         return $query->where('status', 'active');
     }
 
-    public function scopeInactive($query)
+    public function scopeByTenant($query, $tenantId)
     {
-        return $query->where('status', 'inactive');
+        return $query->where('tenant_id', $tenantId);
     }
 
-    public function scopeWithCategories($query)
+    public function syncFromArticle()
     {
-        return $query->with('categories');
-    }
-
-    public function scopeWithTenant($query)
-    {
-        return $query->with('tenant');
+        if (!$this->overrides['image']) {
+            $this->image = $this->article->image;
+        }
     }
 }
