@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers\Billing;
+namespace App\Http\Controllers\Vendor\Billing;
 
 use App\Http\Controllers\Controller;
 use App\Models\Payment;

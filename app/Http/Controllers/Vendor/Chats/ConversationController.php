@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers\Chats;
+namespace App\Http\Controllers\Vendor\Chats;
 
 use App\Http\Controllers\Controller;
 use App\Models\Conversation;
